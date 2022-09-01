@@ -1,0 +1,147 @@
+create table users(
+	id_user serial primary key not null,
+	name varchar(45) not null,
+	cpf varchar(45) not null,
+	data_birth date not null,
+	telephone varchar(45) not null,
+	email varchar(40) not null unique,
+	password varchar(100) not null
+);
+
+create table restaurant(
+	id_restaurant serial primary key not null,
+	nameRestaurant varchar(45) not null,
+	localization varchar(255) not null,
+	openClose time[] not null,
+	delivery boolean not null,
+	priceDelivery float not null
+);
+
+create table product(
+	id_product serial primary key not null,
+	name varchar(45) not null,
+	price float not null,
+	description varchar(255) not null,
+	flavor varchar(45)[],
+	image varchar(255) not null,
+	id_restaurant integer not null,
+	foreign key (id_restaurant) references restaurant (id_restaurant),
+	stock integer not null
+);
+
+create table request(
+	id_request serial primary key not null,
+	totalPrice float not null,
+	data timestamp not null,
+	status_request varchar(45) not null,
+	id_user int not null,
+	foreign key (id_user) references users (id_user)
+);
+
+create table requestProduct(
+	id_requestProduct serial primary key not null,
+	id_product integer not null,
+	id_request integer not null,
+	foreign key (id_product) references product (id_product),
+	foreign key (id_request) references request (id_request),
+	quantity integer not null,
+	priceTotal float not null
+);
+
+create table creditCards(
+    id_creditCard serial not null primary key unique,
+    name varchar(60),
+    card_number varchar(16),
+    expiration date,
+    code varchar(3),
+    id_user integer,
+    FOREIGN key (id_user) references users (id_user)
+);
+
+select * from restaurant;
+select * from product;
+select * from request;
+select * from requestProduct;
+select * from users;
+
+DELETE FROM users WHERE id_user >= 1;
+
+drop table creditcards;
+drop table users;
+drop table requestProduct;
+drop table request;
+drop table product;
+drop table restaurant;
+
+// json product prototype to use
+{
+    "name": "Carne",
+    "price": 10,
+    "description": "Espetinho de carne",
+    "flavor": ["Carne", "Cheddar"],
+    "image": "http://www.google.com",
+    "id_restaurant": 1,
+    "stock": 10
+}
+
+// json create user prototype 
+{
+	"name": "Eduardo Langner",
+	"cpf": "123456789",
+	"data_birth": "01/01/1990",
+	"telephone": "123456789",
+	"email": "test5",
+	"password": "test5"
+}
+
+// json create restaurant prototype
+{
+	"nameRestaurant": "Restaurante Teste",
+	"localization": "Rua Teste, 123",
+	"openClose": "{03:00, 10:20}",
+	"delivery": true,
+	"priceDelivery": 10.00
+}
+
+// json create requestProduct prototype
+{
+	"id_product": 1,
+	"id_request": 1,
+	"quantity": 1,
+	"priceTotal": 10.00
+}
+
+// json create request prototype
+{
+	"totalPrice": 10.00,
+	"data": "01/01/2020",
+	"status_request": "Pendente",
+	"id_user": 1
+}
+
+// json login usser prototype
+{
+    "email": "test5",
+	"password": "test5"
+}
+
+
+INSERT INTO restaurant(nameRestaurant, localization, openClose, delivery, priceDelivery) 
+VALUES ('Restaurante Teste', 'Rua Teste, 123', '{03:00, 10:20}', true, 10.00);
+
+INSERT INTO users(name, cpf, data_birth, telephone, email, password)
+values('Eduardo', '0443049239048', '02/05/1992', '747347838724', 'eduardo@gmail', 'gostodobolsonaro');
+
+INSERT INTO request(totalPrice, data, status_request, id_user)
+values(10.00, '01/01/2020', 'Pendente', 1);
+
+INSERT INTO product(name, price, description, flavor, image, id_restaurant, stock) 
+    VALUES ('Pizza', 10.00, 'Pizza', '{"Cu", "Pica"}', 'pizza.jpg', 1, 10);
+INSERT INTO product(name, price, description, flavor, image, id_restaurant, stock) 
+    VALUES ('Pastel', 10.00, 'Pastel', '{"Chocolate", "Morango"}', 'pastel.jpg', 1, 10);
+INSERT INTO product(name, price, description, flavor, image, id_restaurant, stock) 
+    VALUES ('Espetinho', 10.00, 'Espetinho', '{"Chocolate", "Morango"}', 'espetinho.jpg', 2, 10);
+
+
+INSERT INTO requestProduct(id_product, id_request, quantity, priceTotal)
+values(1, 1, 1, 10.00);

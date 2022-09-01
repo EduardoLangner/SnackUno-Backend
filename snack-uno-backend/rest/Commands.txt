@@ -1,0 +1,54 @@
+/*DOCKER
+
+sobe o servidor (caso não tenha imagem ele cria)
+docker-compose up -d --force-recreate
+
+roda o servidor
+docker-compose up
+
+verifica se o container doi criado
+docker ps
+
+deleta o container
+docker kill <nome do container>
+
+*/
+
+/*DOCKER IN FEDORA
+
+sudo systemctl start docker
+
+*/
+
+roda o script migrate. E depois roda esse
+npm run migrate
+
+/* GIT
+
+salva os arquivos para envio 
+git push
+
+ve os arquivos para envio
+git status
+
+add todos os arquivos
+git add * 
+
+git commit -m "MSG"
+
+git push origin main
+
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name" */
+
+{
+	"email": "roberto@EduardoLangner",
+	"password": "123456789"
+}
+
+{
+	"email": "junior@EduardoLangner",
+	"password": "csharpehmelhor"
+}
+
+https://http.cat/
